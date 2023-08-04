@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>アンケート情報をDBに送る</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <h1>アンケート情報</h1>
+  <form action="/post"  method="POST">
+    <p class="subtitle">名前</p><span class="errortext"></span><input type="text" name="name" class="textbox" required>
+    <p class="subtitle">かな</p><span class="errortext"></span><input type="text" name="kana" value="" class="textbox" required>
+    <p class="subtitle">性別</p><span class="errortext"></span><br><input type="radio" name="gender" value="男性" required>男性<input type="radio" name="gender" value="女性">女性
+    <p class="subtitle">emeil</p><span class="errortext"></span><input type="text" name="emeil" value="" class="textbox" required>
+    <p class="subtitle">お住まいの住所</p><span class="errortext"></span><input type="text" name="address" value="" class="textbox" required>
+    <p class="subtitle">電話番号</p><span class="errortext"></span><input type="text" name="tel" value="" class="textbox" required>
+    <p class="subtitle">当サイトを知った内容（複数選択可）</p>
+    <input type="checkbox" name="site" value="広告で知った">広告で知った<br>
+    <input type="checkbox" name="site" value="サイトを見た">サイトを見た<br>
+    <input type="checkbox" name="site" value="知人から教えてもらった">知人から教えてもらった<br>
+    <input type="checkbox" name="site" value="youtubeの広告を見た">youtubeの広告を見た<br>
+    <p class="subtitle">問い合わせ内容</p><textarea placeholder="" name="inquiry" value=""  class="textbox"></textarea><br>
+    <input type="submit" class="formbtn" value="送信する" disabled>
+  </form>
+</body>
+
+<script>
+  const formElement = document.querySelectorAll("input[required]");
+  const errorText = document.querySelectorAll(".errortext");
+  const formBtn = document.querySelector(".formbtn");
+
+  // 必須項目
+  for (let i = 0; i < formElement.length; i++){
+    // 文字が入力されたとき
+    // input→キー入力と同時にイベントが発生
+    formElement[i].addEventListener("input", update);
+    // change→Enterキーを押したときやフォーカスが外れたときにイベントが発生
+    formElement[i].addEventListener("change", update);
+    function update() {
+    const isRequired = formElement[i].checkValidity();
+      if (isRequired) {
+        formBtn.disabled = false;
+        formBtn.style.opacity = 1;
+        formBtn.style.cursor = "pointer";
+        return;
+      }
+    }
+  }
+
+  // バリデーションチェック
+  function inputChange(event){
+    // 名前
+    if(formElement[0].value.match(/^[ぁ-ん一-龠a-zA-Z]*$/) || formElement[0].value  === ''){
+      errorText[0].innerHTML = '';
+    }else{
+      errorText[0].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+    // ひらがな
+    if(formElement[1].value.match(/^[ぁ-んー　]*$/) || formElement[1].value  === ''){
+      errorText[1].innerHTML = '';
+    }else{
+      errorText[1].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+    // emeil
+    if(formElement[3].value.match(/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/) || formElement[3].value  === ''){
+      errorText[3].innerHTML = '';
+    }else{
+      errorText[3].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+    // お住まいの住所
+    if(formElement[4].value.match(/^[ぁ-ん一-龠0-9]*$/) || formElement[4].value  === ''){
+      errorText[4].innerHTML = '';
+    }else{
+      errorText[4].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+    // 電話番号
+    if(formElement[5].value.match(/^[0-9\-]+$/) || formElement[5].value  === ''){
+      errorText[5].innerHTML = '';
+    }else{
+      errorText[5].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+  }
+  formElement[0].addEventListener('blur', inputChange);
+  formElement[1].addEventListener('blur', inputChange);
+  formElement[3].addEventListener('blur', inputChange);
+  formElement[4].addEventListener('blur', inputChange);
+  formElement[5].addEventListener('blur', inputChange);
+
+// 送信ボタンをクリック
+console.log(formElement[2].checked)
+  formBtn.addEventListener('click', function() {
+    if(formElement[2].checked){
+      console.log('aaaa')
+      errorText[2].innerHTML = '';
+    }else{
+      console.log('bbb')
+      errorText[2].innerHTML = '<span class="red">※入力にエラーがあります</span>';
+    }
+  }, false);
+
+
+
+
+</script>
+</html>

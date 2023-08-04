@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>利用者名一覧</title>
+  <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <!--formの％は全て消した状態で行うか？-->
+  <h1>利用者名一覧</h1>
+  <table>
+    <tbody>
+      <tr>
+        <th>名前:</th>
+        <td><%= user[0].name %></td>
+      </tr>
+      <tr>
+        <th>疾患名:</th>
+        <td><%= user[0].disease %></td>
+      </tr>
+      <tr>
+        <th>現病歴:</th>
+        <td><%= user[0].medical %></td>
+      </tr>
+      <tr>
+        <th>目標設定:</th>
+        <td><%= user[0].goal %></td>
+      </tr>
+      <tr>
+        <th>家族構成:</th>
+        <td><%= user[0].family %></td>
+      </tr>
+      <tr>
+        <th>既往歴:</th>
+        <td><%= user[0].history %></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

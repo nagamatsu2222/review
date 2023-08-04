@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <title>User Edit</title>
+  <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <!--formの％は全て消した状態で行うか？-->
+  <h1>更新フォーム</h1>
+  <form action="/update/<%= user[0].id %>" method="POST">
+    利用者名 <input type="text" name="name" value="<%= user[0].name %>"><br>
+    生年月日 <input type="text" name="birthdate" value="<%= user[0].birthdate %>"><br>
+    リハビリの開始日 <input type="text" name="rehabilitationStartDate" value="<%= user[0].rehabilitationStartDate %>"><br>
+    介護保険の期限 <input type="text" name="careInsuranceExpiration" value="<%= user[0].careInsuranceExpiration %>"><br>
+    特定疾患の期限 <input type="text" name="specificDiseaseExpiration" value="<%= user[0].specificDiseaseExpiration %>"><br>
+    重症心身障害者の手帳の期限 <input type="text" name="severePhysicalDisabilityExpiration" value="<%= user[0].severePhysicalDisabilityExpiration %>"><br>
+    介護マネージャーの事業所 <input type="text" name="careManagerOffice" value="<%= user[0].careManagerOffice %>"><br>
+    介護マネージャーの担当者名 <input type="text" name="careManagerName" value="<%= user[0].careManagerName %>"><br>
+    要介護度 <input type="text" name="careNeedsLevel" value="<%= user[0].careNeedsLevel %>"><br>
+    生活保護の有無 <input type="text" name="welfareAssistance" value="<%= user[0].welfareAssistance %>"><br>
+    <button type="submit">更新</button>
+  </form>
+</body>
+
+</html>
