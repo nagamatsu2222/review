@@ -3,27 +3,42 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>アンケート情報をDBに送る</title>
+  <title>商品レビュー機能作成</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <h1>アンケート情報</h1>
-  <form action="/post"  method="POST">
-    <p class="subtitle">名前</p><span class="errortext"></span><input type="text" name="name" class="textbox" required>
-    <p class="subtitle">かな</p><span class="errortext"></span><input type="text" name="kana" value="" class="textbox" required>
-    <p class="subtitle">性別</p><span class="errortext"></span><br><input type="radio" name="gender" value="男性" required>男性<input type="radio" name="gender" value="女性">女性
-    <p class="subtitle">emeil</p><span class="errortext"></span><input type="text" name="emeil" value="" class="textbox" required>
-    <p class="subtitle">お住まいの住所</p><span class="errortext"></span><input type="text" name="address" value="" class="textbox" required>
-    <p class="subtitle">電話番号</p><span class="errortext"></span><input type="text" name="tel" value="" class="textbox" required>
-    <p class="subtitle">当サイトを知った内容（複数選択可）</p>
-    <input type="checkbox" name="site" value="広告で知った">広告で知った<br>
-    <input type="checkbox" name="site" value="サイトを見た">サイトを見た<br>
-    <input type="checkbox" name="site" value="知人から教えてもらった">知人から教えてもらった<br>
-    <input type="checkbox" name="site" value="youtubeの広告を見た">youtubeの広告を見た<br>
-    <p class="subtitle">問い合わせ内容</p><textarea placeholder="" name="inquiry" value=""  class="textbox"></textarea><br>
-    <input type="submit" class="formbtn" value="送信する" disabled>
-  </form>
+  <div class="contents-wrap">
+    <h1>商品レビュー</h1>
+    <div class="table-wrap">
+      <table class="table">
+        <tr>
+          <th>名前</th>
+          <th>年齢</th>
+          <th>評価☆</th>
+          <th>理由</th>
+        </tr>
+        <% function isWelfare(num) { if(num===1) { return '有' ; } else { return '無' ; } } %>
+          <% users.forEach(function (value) { %>
+            <tr>
+              <td>
+                <%= value.username %>
+              </td>
+              <td>
+                <%= value.age %>
+              </td>
+              <td>
+                <%= value.rating %>
+              </td>
+              <td>
+                <%= value.reason %>
+              </td>
+            </tr>
+            <% }); %>
+      </table>
+    </div>
+  </div>
+
 </body>
 
 <script>

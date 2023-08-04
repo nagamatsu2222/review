@@ -1,46 +1,63 @@
-tr {
+html { font-size: 62.5%; }
+.contents-wrap{
+  width: 80%;
+  margin: 0 auto;
+}
+tr{
   font-size: 12px;
 }
-
-td {
-  background: #b8ffd1;
+td{
+  background: #FFFFFC;
   color: #464646;
-  padding: 5px 10px;
+  padding: 10px;
+  font-size: 1.5rem;
 }
-
-th {
-  background: #133f10;
+th{
+  background: #181B39;
   color: #fff;
-  padding: 5px 10px;
+  font-weight: bold;
+  padding: 15px;
+  font-size: 2rem;
 }
-
 h1 {
-  color: #00730a;
+  font-size: 2.5rem;
+  position: relative;
+  display: inline-block;
+  padding: 0 65px;
+  text-align: center;
 }
-
-.table-wrap {
-  overflow-x: scroll;
+h1 {
+  display: flex;
+  align-items: center;
+  padding: .5em .7em;
+  background-color: #f2f2f2;
+  color: #333333;
 }
-
-.table {
+h1::before {
+  display: inline-block;
+  width: 5px;
+  height: 1.5em;
+  margin-right: .5em;
+  background-color: #010038;
+  content: '';
+}
+.table{
   width: 100%;
   border-collapse: collapse;
-  white-space: nowrap;
 }
-
 .table th,
-.table td {
+.table td{
   border: 2px solid #eee;
-  padding: 4px 8px;
+  text-align:center;
 }
-
-body {
-  width: 50%;
+.table tr:nth-child(2n) td{
+  background: #FBFBF6;
+}
+body{
   margin: 0 auto;
   min-width: 9rem;
 }
-
-.textbox, textarea {
+.textbox, textarea{
   float: left;
   width: 100%;
   max-width: 100%;
@@ -57,8 +74,7 @@ body {
     float: right;
   }
 }
-
-.formbtn {
+.formbtn{
   border-radius: 6px;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -78,7 +94,6 @@ body {
 .formbtn:disabled{
   opacity: .5;
 }
-
 .subtitle{
   font-weight: bold;
   margin-top: 10px;

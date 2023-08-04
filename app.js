@@ -17,7 +17,7 @@ const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'express_db'
+  database: 'questionnaire'
 });
 
 // cssファイルの取得
@@ -25,7 +25,7 @@ app.use(express.static('assets'));
 
 // mysqlからデータを持ってくる
 app.get('/', (req, res) => {
-  const sql = "select * from questionnaire";
+  const sql = "select * from personas";
   con.query(sql, function (err, result, fields) {
     if (err) throw err;
     res.render('index', {
@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/post', (req, res) => {
-  const sql = "INSERT INTO questionnaire SET ?"
+  const sql = "INSERT INTO personas SET ?"
   con.query(sql, req.body, function (err, result, fields) {
     console.log(req.body)
     if (err) throw err;
