@@ -10,31 +10,49 @@
 <body>
   <div class="contents-wrap">
     <h1>商品レビュー</h1>
+    <div class="selectbox-wrap">
+      <label class="selectbox">
+        <select class="sort" name="member">
+            <option value="">選択してください</option>
+            <option value="high">評価が高い順</option>
+            <option value="low">評価が低い順</option>
+            <option value="eva5">評価☆5</option>
+            <option value="eva4">評価☆4</option>
+            <option value="eva3">評価☆3</option>
+            <option value="eva2">評価☆2</option>
+            <option value="eva1">評価☆1</option>
+        </select>
+      </label>
+    </div>
     <div class="table-wrap">
-      <table class="table">
-        <tr>
-          <th>名前</th>
-          <th>年齢</th>
-          <th>評価☆</th>
-          <th>理由</th>
-        </tr>
+      <table class="table usersBox">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>年齢</th>
+            <th>評価☆</th>
+            <th>理由</th>
+          </tr>
+        </thead>
         <% function isWelfare(num) { if(num===1) { return '有' ; } else { return '無' ; } } %>
-          <% users.forEach(function (value) { %>
-            <tr>
-              <td>
-                <%= value.username %>
-              </td>
-              <td>
-                <%= value.age %>
-              </td>
-              <td>
-                <%= value.rating %>
-              </td>
-              <td>
-                <%= value.reason %>
-              </td>
-            </tr>
-            <% }); %>
+        <tbody class="usersBoxInfo">
+        <% users.forEach(function (value) { %>
+          <tr>
+            <td>
+              <%= value.username %>
+            </td>
+            <td>
+              <%= value.age %>
+            </td>
+            <td>
+              <%= value.rating %>
+            </td>
+            <td>
+              <%= value.reason %>
+            </td>
+          </tr>
+        <% }); %>
+        </tbody>
       </table>
     </div>
   </div>
@@ -42,78 +60,43 @@
 </body>
 
 <script>
-  const formElement = document.querySelectorAll("input[required]");
-  const errorText = document.querySelectorAll(".errortext");
-  const formBtn = document.querySelector(".formbtn");
 
-  // 必須項目
-  for (let i = 0; i < formElement.length; i++){
-    // 文字が入力されたとき
-    // input→キー入力と同時にイベントが発生
-    formElement[i].addEventListener("input", update);
-    // change→Enterキーを押したときやフォーカスが外れたときにイベントが発生
-    formElement[i].addEventListener("change", update);
-    function update() {
-    const isRequired = formElement[i].checkValidity();
-      if (isRequired) {
-        formBtn.disabled = false;
-        formBtn.style.opacity = 1;
-        formBtn.style.cursor = "pointer";
-        return;
+  // 課題02 - 評価値のソート機能
+
+  const users = JSON.parse('<%= JSON.stringify(users) %>'.replace(/&#34;/g, '"'));
+  const sort = document.querySelector('.sort');
+  const usersBox = document.getElementsByClassName("usersBox");
+  const usersBoxInfo = document.getElementsByClassName("usersBoxInfo");
+  let userList = [];
+
+  sort.addEventListener("change", function() {
+    for (let i = 0; i < users.length; i++){
+      // 一覧表削除
+      console.log(usersBoxInfo[0])
+      while(usersBoxInfo[0].firstChild){
+        usersBoxInfo[0].removeChild(usersBoxInfo[0].firstChild);
+      }
+      if(sort.value === "high"){
+        // 評価の高い順
+        users.sort((a, b) => b.rating - a.rating);
+        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+      }else if(sort.value === "low"){
+        // 評価の低い順
+        users.sort((a, b) => a.rating - b.rating);
+        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+      }else if(sort.value === "eva5"){
+        // // 評価☆5
+        const filteredData = users.filter(value => value.rating === 5);
+        
+        
+        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+      }else{
+        console.log('失敗')
       }
     }
-  }
-
-  // バリデーションチェック
-  function inputChange(event){
-    // 名前
-    if(formElement[0].value.match(/^[ぁ-ん一-龠a-zA-Z]*$/) || formElement[0].value  === ''){
-      errorText[0].innerHTML = '';
-    }else{
-      errorText[0].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
-    // ひらがな
-    if(formElement[1].value.match(/^[ぁ-んー　]*$/) || formElement[1].value  === ''){
-      errorText[1].innerHTML = '';
-    }else{
-      errorText[1].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
-    // emeil
-    if(formElement[3].value.match(/^[a-zA-Z0-9_+-]+(.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/) || formElement[3].value  === ''){
-      errorText[3].innerHTML = '';
-    }else{
-      errorText[3].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
-    // お住まいの住所
-    if(formElement[4].value.match(/^[ぁ-ん一-龠0-9]*$/) || formElement[4].value  === ''){
-      errorText[4].innerHTML = '';
-    }else{
-      errorText[4].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
-    // 電話番号
-    if(formElement[5].value.match(/^[0-9\-]+$/) || formElement[5].value  === ''){
-      errorText[5].innerHTML = '';
-    }else{
-      errorText[5].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
-  }
-  formElement[0].addEventListener('blur', inputChange);
-  formElement[1].addEventListener('blur', inputChange);
-  formElement[3].addEventListener('blur', inputChange);
-  formElement[4].addEventListener('blur', inputChange);
-  formElement[5].addEventListener('blur', inputChange);
-
-// 送信ボタンをクリック
-console.log(formElement[2].checked)
-  formBtn.addEventListener('click', function() {
-    if(formElement[2].checked){
-      console.log('aaaa')
-      errorText[2].innerHTML = '';
-    }else{
-      console.log('bbb')
-      errorText[2].innerHTML = '<span class="red">※入力にエラーがあります</span>';
-    }
   }, false);
+
+
 
 
 

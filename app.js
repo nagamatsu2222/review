@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({
 app.set('view engine', 'ejs');
 
 const mysql = require('mysql2');
-const { info } = require('console');
 
 const con = mysql.createConnection({
   host: 'localhost',
