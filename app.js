@@ -32,15 +32,34 @@ app.get('/', (req, res) => {
     });
   });
 });
-
+// DBにテーブルを追加する文
 app.post('/post', (req, res) => {
   const sql = "INSERT INTO personas SET ?"
   con.query(sql, req.body, function (err, result, fields) {
     console.log(req.body)
     if (err) throw err;
     console.log(result);
-    res.sendFile(path.join(__dirname, "./", "html", "thanks.html"));
+    res.redirect('/');
   });
 });
+// DBを更新する場合update文が必要
+app.post('/update/:id', (req, res) => {
+  const sql = "UPDATE personas SET ? WHERE id = " + req.params.id;
+  con.query(sql,req.body, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    res.redirect('/');
+  });
+});
+// データ検索
+app.get('/edit/:id', (req, res) => {
+  const sql = "SELECT * FROM personas WHERE id = ?";
+  con.query(sql, [req.params.id], function (err, result, fields) {
+    if (err) throw err;
+    res.render('edit', {user: result});
+  });
+});
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

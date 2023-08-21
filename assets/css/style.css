@@ -58,13 +58,12 @@ body{
   min-width: 9rem;
 }
 .textbox, textarea{
-  float: left;
-  width: 100%;
+  width: 30%;
   max-width: 100%;
-  margin: 5px 0 20px;
-  padding: 0.5rem;
+  margin: 5px 0 10px;
+  padding: 1rem;
   border-radius: 0.3rem;
-  border: 2px solid #bdbdbd;
+  border: 1px solid #110f2c;
   background: darken(#f9f9f9, 10%);
   color: darken(#f9f9f9, 50%);
   
@@ -76,28 +75,24 @@ body{
 }
 .formbtn{
   border-radius: 6px;
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 50px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 280px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 200px;
   display: block;
   letter-spacing: 0.05em;
-  background: #00730a;
+  background: #006275;
   color: #fff;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   }
-.formbtn:disabled{
-  opacity: .5;
-}
 .subtitle{
-  font-weight: bold;
   margin-top: 10px;
   margin-bottom: 0;
+  font-size: 13px;
 }
 .red{
   background-color: #ffc6c6;
@@ -150,10 +145,36 @@ body{
   height: 2.8em;
   padding: .4em 3.6em .4em .8em;
   border: 1px solid #006275;
-  color: #044e58;
+  color: #006275;
   font-size: 1.3em;
   cursor: pointer;
 }
 .selectbox select:focus {
   outline: 1px solid #006275;
+}
+.agelist{
+  width: 100%;
+  text-align: center;
+}
+.agelist td{
+  text-align:center;
+  font-size: 14px;
+}
+.agelist td:nth-child(1){
+  background: #ffa5a5;
+  width: 30%;
+}
+.agelist td:nth-child(2){
+  background: #ffe599;
+  width: 60%;
+}
+.agelist td:nth-child(3){
+  background: #7bffc9;
+  width: 10%;
+}
+.form-wrap{
+  text-align: center;
+  background-color: #eeeeee;
+  padding: 5px 0;
+  margin: 5px 0;
 }

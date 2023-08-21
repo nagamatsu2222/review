@@ -24,6 +24,15 @@
         </select>
       </label>
     </div>
+    <div class="form-wrap">
+      <form action="/post"  method="POST">
+        <p class="subtitle">ユーザー名</p><input type="text" name="username" class="textbox">
+        <p class="subtitle">年齢</p><input type="text" name="age" class="textbox">
+        <p class="subtitle">評価</p><input type="text" name="rating" class="textbox">
+        <p class="subtitle">評価内容</p><input type="text" name="reason" class="textbox">
+        <input type="submit" class="formbtn" value="送信する">
+      </form>
+    </div>
     <div class="table-wrap">
       <table class="table usersBox">
         <thead>
@@ -32,6 +41,7 @@
             <th>年齢</th>
             <th>評価☆</th>
             <th>理由</th>
+            <th>更新</th>
           </tr>
         </thead>
         <% function isWelfare(num) { if(num===1) { return '有' ; } else { return '無' ; } } %>
@@ -50,6 +60,7 @@
             <td>
               <%= value.reason %>
             </td>
+            <td><a href="/edit/<%= value.id %>"><input type="button" value="更新"></a></td>
           </tr>
         <% }); %>
         </tbody>
@@ -65,39 +76,80 @@
 
   const users = JSON.parse('<%= JSON.stringify(users) %>'.replace(/&#34;/g, '"'));
   const sort = document.querySelector('.sort');
-  const usersBox = document.getElementsByClassName("usersBox");
   const usersBoxInfo = document.getElementsByClassName("usersBoxInfo");
-  let userList = [];
+  const selectBoxWrap = document.getElementsByClassName("selectbox-wrap");
 
+
+  // プルダウンを変える
   sort.addEventListener("change", function() {
+    // 一覧表削除
+    while(usersBoxInfo[0].firstChild){
+      usersBoxInfo[0].firstChild.remove();
+    }
+    // ソート機能
     for (let i = 0; i < users.length; i++){
-      // 一覧表削除
-      console.log(usersBoxInfo[0])
-      while(usersBoxInfo[0].firstChild){
-        usersBoxInfo[0].removeChild(usersBoxInfo[0].firstChild);
-      }
       if(sort.value === "high"){
         // 評価の高い順
         users.sort((a, b) => b.rating - a.rating);
-        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
       }else if(sort.value === "low"){
         // 評価の低い順
         users.sort((a, b) => a.rating - b.rating);
-        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
-      }else if(sort.value === "eva5"){
-        // // 評価☆5
-        const filteredData = users.filter(value => value.rating === 5);
-        
-        
-        usersBox[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
-      }else{
-        console.log('失敗')
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
       }
+    }
+    // 課題03 - 評価値の絞り込み機能 //
+    // 評価☆5
+    if(sort.value === "eva5"){
+      const filteredData = users.filter(value => value.rating === 5);
+      filteredData.forEach(function(element){
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+      });
+    // 評価☆4
+    }else if(sort.value === "eva4"){
+      const filteredData = users.filter(value => value.rating === 4);
+      filteredData.forEach(function(element){
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+      });
+    // 評価☆3
+    }else if(sort.value === "eva3"){
+      const filteredData = users.filter(value => value.rating === 3);
+      filteredData.forEach(function(element){
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+      });
+    // 評価☆2
+    }else if(sort.value === "eva2"){
+      const filteredData = users.filter(value => value.rating === 2);
+      filteredData.forEach(function(element){
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+      });
+    // 評価☆1
+    }else if(sort.value === "eva1"){
+      const filteredData = users.filter(value => value.rating === 1);
+      filteredData.forEach(function(element){
+        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+      });
     }
   }, false);
 
+  // 課題04 - 年代毎のグラフ作成
+  const twoList = [];
+  const threeList = [];
+  const fourList = [];
+  for (let i = 0; i < users.length; i++){
+    console.log(users[i].age)
+    if(users[i].age >= 20 && users[i].age <= 29){
+      twoList.push(users[i]);
+    }else if(users[i].age  >= 30 && users[i].age <= 39){
+      threeList.push(users[i]);
+    }else if(users[i].age  >= 40 && users[i].age <= 49){
+      fourList.push(users[i]);
+    }
+  }
+  selectBoxWrap[0].insertAdjacentHTML("afterend",`<table class="agelist"><tr><td>20代${twoList.length}人</td><td>30代${threeList.length}人</td><td>40代${fourList.length}人</td></tr></table>`);
 
 
+  // 課題05 - レビューの新規追加機能
 
 
 
