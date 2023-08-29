@@ -13,9 +13,12 @@
     <div class="selectbox-wrap">
       <label class="selectbox">
         <select class="sort" name="member">
-            <option value="">選択してください</option>
-            <option value="high">評価が高い順</option>
-            <option value="low">評価が低い順</option>
+            <option value="" disabled selected>選択してください</option>
+            <!-- <option value="high">評価が高い順</option>
+            <option value="low">評価が低い順</option> -->
+            <option value="base" <% if (order === "base") { %> selected <% } %>> 標準</option>
+            <option value="desc" <% if (order === "desc") { %> selected <% } %>> 評価が高い順</option>
+            <option value="asc"  <% if (order === "asc") { %> selected <% } %>> 評価が低い順</option>
             <option value="eva5">評価☆5</option>
             <option value="eva4">評価☆4</option>
             <option value="eva3">評価☆3</option>
@@ -82,22 +85,22 @@
 
   // プルダウンを変える
   sort.addEventListener("change", function() {
-    // 一覧表削除
+    // ユーザー情報一覧表削除
     while(usersBoxInfo[0].firstChild){
       usersBoxInfo[0].firstChild.remove();
     }
-    // ソート機能
-    for (let i = 0; i < users.length; i++){
-      if(sort.value === "high"){
-        // 評価の高い順
-        users.sort((a, b) => b.rating - a.rating);
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
-      }else if(sort.value === "low"){
-        // 評価の低い順
-        users.sort((a, b) => a.rating - b.rating);
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
-      }
-    }
+    // 課題02 - 評価値のソート機能
+    // for (let i = 0; i < users.length; i++){
+    //   if(sort.value === "high"){
+    //     // 評価の高い順
+    //     users.sort((a, b) => b.rating - a.rating);
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+    //   }else if(sort.value === "low"){
+    //     // 評価の低い順
+    //     users.sort((a, b) => a.rating - b.rating);
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${users[i].username}</td><td>${users[i].age}</td><td>${users[i].rating}</td><td>${users[i].reason}</td></tr>`)
+    //   }
+    // }
     // 課題03 - 評価値の絞り込み機能 //
     // 評価☆5
     if(sort.value === "eva5"){
@@ -149,8 +152,17 @@
   selectBoxWrap[0].insertAdjacentHTML("afterend",`<table class="agelist"><tr><td>20代${twoList.length}人</td><td>30代${threeList.length}人</td><td>40代${fourList.length}人</td></tr></table>`);
 
 
-  // 課題05 - レビューの新規追加機能
-
+  // EX課題01 - 評価値のソート機能
+  sort.addEventListener("change", () => {
+      let order = ""
+      for(option of sort.options) {
+          if (value === "base") {
+            order = value.base
+          }
+      }
+      // ソートしたユーザー情報でindexをレンダリングする
+      location.assign(`/${order}`)
+  })
 
 
 </script>
