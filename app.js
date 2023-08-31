@@ -21,14 +21,16 @@ const con = mysql.createConnection({
 
 // cssファイルの取得
 app.use(express.static('assets'));
-
+// favicon.icoがリクエストされた場合、空のレスポンスを返す。
+app.get("/favicon.ico", (req, res) => {res.status(204);})
 // mysqlからデータを持ってくる
 app.get('/', (req, res) => {
   const sql = "select * from personas";
   con.query(sql, function (err, result, fields) {
     if (err) throw err;
     res.render('index', {
-      users: result
+      users: result,
+      order: ""
     });
   });
 });

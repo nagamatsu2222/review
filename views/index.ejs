@@ -157,7 +157,13 @@
       let order = ""
       for(option of sort.options) {
           if (value === "base") {
-            order = value.base
+            order = value
+          }else if(value === "desc"){
+            order = value
+          }else if(value === "asc"){
+            order = value
+          }else{
+            order = value
           }
       }
       // ソートしたユーザー情報でindexをレンダリングする
