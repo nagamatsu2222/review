@@ -77,11 +77,7 @@ app.get("/:order", (req, res) => {
   con.query(sql, function (err, result, fields) {
       if (err) throw err;
       // ソートされたユーザー情報と順番の情報を返す
-      res.render("index", {
-        personasOrg: personasOrg,
-        filteredPersonas: result,
-        order: order
-    });
+      res.render("index", { users: result , order: req.params.order});
   });
 });
 
