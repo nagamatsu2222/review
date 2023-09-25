@@ -68,8 +68,10 @@ app.get('/edit/:id', (req, res) => {
 // EX課題01 - 評価値のソート機能
 // ソートを選択された場合の処理
 app.get("/:order", (req, res) => {
-  console.log(req.params.order)
+
   let sql = "";
+  const filter = req.params.order.split("+")
+  console.log(filter)
   // 標準の場合は全てのユーザー情報を返す
   if (req.params.order === "base") sql = "SELECT * FROM personas";
   // 順番が選択されている場合は昇順か降順か指定する

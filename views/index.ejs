@@ -16,14 +16,14 @@
             <!-- <option value="high">評価が高い順</option>
             <option value="low">評価が低い順</option> -->
             <option value="" disabled selected>選択してください</option>
-            <option value="base" <% if (order === "base") { %> selected <% } %>> 標準</option>
-            <option value="desc" <% if (order === "desc") { %> selected <% } %>> 評価が高い順</option>
-            <option value="asc"  <% if (order === "asc") { %> selected <% } %>> 評価が低い順</option>
-            <option value="eva5">評価☆5</option>
-            <option value="eva4">評価☆4</option>
-            <option value="eva3">評価☆3</option>
-            <option value="eva2">評価☆2</option>
-            <option value="eva1">評価☆1</option>
+            <option value="base" <% if (order === "base") { %> selected <% } %>>標準</option>
+            <option value="desc" <% if (order === "desc") { %> selected <% } %>>評価が高い順</option>
+            <option value="asc"  <% if (order === "asc") { %> selected <% } %>>評価が低い順</option>
+            <option value="eva5" <% if(person[0].rating===5) {%> selected <% } %>>評価☆5</option>
+            <option value="eva4" <% if(person[0].rating===4) {%> selected <% } %>>評価☆4</option>
+            <option value="eva3" <% if(person[0].rating===3) {%> selected <% } %>>評価☆3</option>
+            <option value="eva2" <% if(person[0].rating===2) {%> selected <% } %>>評価☆2</option>
+            <option value="eva1" <% if(person[0].rating===1) {%> selected <% } %>>評価☆1</option>
         </select>
       </label>
     </div>
@@ -103,36 +103,36 @@
     // }
     // 課題03 - 評価値の絞り込み機能 //
     // 評価☆5
-    if(sort.value === "eva5"){
-      const filteredData = users.filter(value => value.rating === 5);
-      filteredData.forEach(function(element){
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
-      });
+    // if(sort.value === "eva5"){
+    //   const filteredData = users.filter(value => value.rating === 5);
+    //   filteredData.forEach(function(element){
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+    //   });
     // 評価☆4
-    }else if(sort.value === "eva4"){
-      const filteredData = users.filter(value => value.rating === 4);
-      filteredData.forEach(function(element){
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
-      });
+    // }else if(sort.value === "eva4"){
+    //   const filteredData = users.filter(value => value.rating === 4);
+    //   filteredData.forEach(function(element){
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+    //   });
     // 評価☆3
-    }else if(sort.value === "eva3"){
-      const filteredData = users.filter(value => value.rating === 3);
-      filteredData.forEach(function(element){
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
-      });
+    // }else if(sort.value === "eva3"){
+    //   const filteredData = users.filter(value => value.rating === 3);
+    //   filteredData.forEach(function(element){
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+    //   });
     // 評価☆2
-    }else if(sort.value === "eva2"){
-      const filteredData = users.filter(value => value.rating === 2);
-      filteredData.forEach(function(element){
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
-      });
+    // }else if(sort.value === "eva2"){
+    //   const filteredData = users.filter(value => value.rating === 2);
+    //   filteredData.forEach(function(element){
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+    //   });
     // 評価☆1
-    }else if(sort.value === "eva1"){
-      const filteredData = users.filter(value => value.rating === 1);
-      filteredData.forEach(function(element){
-        usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
-      });
-    }
+    // }else if(sort.value === "eva1"){
+    //   const filteredData = users.filter(value => value.rating === 1);
+    //   filteredData.forEach(function(element){
+    //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
+    //   });
+    // }
   }, false);
 
   // 課題04 - 年代毎のグラフ作成
@@ -151,27 +151,18 @@
   selectBoxWrap[0].insertAdjacentHTML("afterend",`<table class="agelist"><tr><td>20代${twoList.length}人</td><td>30代${threeList.length}人</td><td>40代${fourList.length}人</td></tr></table>`);
 
   console.log(sort.value)
-  // EX課題01 - 評価値のソート機能
-    sort.addEventListener("change", () => {
-        let order = ""
-        
-        for(option of sort.options) {
-            console.log(option.selected)
-            if (option.selected && option.value !== "") {
-                order = option.value
-            }
 
-            // if(sort.options === "base"){
-            //     order = option.value
-            // }else if(sort.options === "desc"){
-            //     order = option.value
-            // }else if(sort.options === "asc"){
-            //     order = option.value
-            // }
-        }
-      // ソートしたユーザー情報でindexをレンダリングする
-    location.assign(`/${order}`)
-    })
+  sort.addEventListener("change", () => {
+      let order = ""
+      // EX課題01 - 評価値のソート機能
+      for(option of sort.options) {
+          if (option.selected && option.value !== "") {
+              order = option.value
+          }
+      }
+    // ソートしたユーザー情報でindexをレンダリングする
+  location.assign(`/${order}`)
+  })
 
 </script>
 </html>
