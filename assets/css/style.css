@@ -107,41 +107,8 @@ body{
   text-align: right;
   margin: 20px 0;
 }
-.selectbox {
+.sort,.rating {
   position: relative;
-}
-
-.selectbox::before,
-.selectbox::after {
-  position: absolute;
-  content: '';
-  pointer-events: none;
-}
-.selectbox::before {
-  right: 0;
-  display: inline-block;
-  width: 3.6em;
-  height: 3.6em;
-  border-radius: 0 3px 3px 0;
-  background-color: #006275;
-  content: '';
-}
-.selectbox::after {
-  position: absolute;
-  top: 45%;
-  right: 1.8em;
-  transform: translate(50%, -50%) rotate(45deg);
-  width: 7px;
-  height: 7px;
-  border-bottom: 2px solid #fff;
-  border-right: 2px solid #fff;
-  content: '';
-}
-.selectbox select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  min-width: 230px;
   height: 2.8em;
   padding: .4em 3.6em .4em .8em;
   border: 1px solid #006275;
@@ -149,7 +116,10 @@ body{
   font-size: 1.3em;
   cursor: pointer;
 }
-.selectbox select:focus {
+.sort{
+  margin-right: 10px;
+}
+.sort:focus,.rating:focus {
   outline: 1px solid #006275;
 }
 .agelist{
