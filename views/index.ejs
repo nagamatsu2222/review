@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>商品レビュー機能作成</title>
+  <title>商品レビュー機能</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
@@ -12,18 +12,22 @@
     <h1>商品レビュー</h1>
     <div class="selectbox-wrap">
       <label class="selectbox">
+        並べ替え：
         <select class="sort" name="member">
-            <!-- <option value="high">評価が高い順</option>
-            <option value="low">評価が低い順</option> -->
             <option value="" disabled selected>選択してください</option>
             <option value="base" <% if (order === "base") { %> selected <% } %>>標準</option>
             <option value="desc" <% if (order === "desc") { %> selected <% } %>>評価が高い順</option>
             <option value="asc"  <% if (order === "asc") { %> selected <% } %>>評価が低い順</option>
-            <option value="eva5" <% if(person[0].rating===5) {%> selected <% } %>>評価☆5</option>
-            <option value="eva4" <% if(person[0].rating===4) {%> selected <% } %>>評価☆4</option>
-            <option value="eva3" <% if(person[0].rating===3) {%> selected <% } %>>評価☆3</option>
-            <option value="eva2" <% if(person[0].rating===2) {%> selected <% } %>>評価☆2</option>
-            <option value="eva1" <% if(person[0].rating===1) {%> selected <% } %>>評価☆1</option>
+        </select>
+        絞り込み：
+        <select class="rating">
+          <option value="" disabled selected>選択してください</option>
+          <option>標準</option>
+          <option>評価１</option>
+          <option>評価２</option>
+          <option>評価３</option>
+          <option>評価４</option>
+          <option>評価５</option>
         </select>
       </label>
     </div>
@@ -79,16 +83,18 @@
 
   const users = JSON.parse('<%= JSON.stringify(users) %>'.replace(/&#34;/g, '"'));
   const sort = document.querySelector('.sort');
+  const rating = document.querySelector('.rating');
   const usersBoxInfo = document.getElementsByClassName("usersBoxInfo");
   const selectBoxWrap = document.getElementsByClassName("selectbox-wrap");
 
 
   // プルダウンを変える
-  sort.addEventListener("change", function() {
-    // ユーザー情報一覧表削除
-    while(usersBoxInfo[0].firstChild){
-      usersBoxInfo[0].firstChild.remove();
-    }
+  // sort.addEventListener("change", function() {
+  //   // ユーザー情報一覧表削除
+  //   while(usersBoxInfo[0].firstChild){
+  //     usersBoxInfo[0].firstChild.remove();
+  //   }
+
     // 課題02 - 評価値のソート機能
     // for (let i = 0; i < users.length; i++){
     //   if(sort.value === "high"){
@@ -133,7 +139,7 @@
     //     usersBoxInfo[0].insertAdjacentHTML("beforeend",`<tr><td>${element.username}</td><td>${element.age}</td><td>${element.rating}</td><td>${element.reason}</td></tr>`)
     //   });
     // }
-  }, false);
+  // }, false);
 
   // 課題04 - 年代毎のグラフ作成
   const twoList = [];
@@ -152,17 +158,61 @@
 
   console.log(sort.value)
 
-  sort.addEventListener("change", () => {
-      let order = ""
-      // EX課題01 - 評価値のソート機能
-      for(option of sort.options) {
-          if (option.selected && option.value !== "") {
-              order = option.value
-          }
-      }
+
+  // ページ読み込み時は初期値を出力
+  window.onload = () => {
+    createTableData(filteredPersonas);
+    drawingGraph(personasOrg);
+  };
+
+  // 並べ替えを選択された場合のソート処理
+  sort.addEventListener("change", sortAndSearchSelect)
+  // 絞り込みを選択された場合の処理
+  rating.addEventListener("change", sortAndSearchSelect)
+
+  /*
+    並べ替えもしくは絞り込みを選択された場合のメソッド
+  */
+  function sortAndSearchSelect() {
+    let res = ""
+    let filterObj = []
+    // 絞り込みの値
+    let search = ""
+    // ソートの値
+    let order = ""
+    // ソートに選択された値を検索
+    for(option of sort.options) {
+        if (option.selected && option.value !== "") {
+            filterObj["order"] = option.value
+        }
+    }
+    // 絞り込みに選択された値を検索
+    for(option of rating.options) {
+        if (option.selected && option.value !== "") {
+            filterObj["search"] = option.value
+        }
+    }
+    // 「order=rating:asc」「search=rating:1」のような形に
+    const filterArray = Object.keys(filterObj).map(function (key) {
+        return [`${key}=${filterObj[key]}`];
+    });
+    // 複数あれば、「order=asc+search=1」のような形に変換、なければカンマは削除
+    filterArray.length > 1 ? res = filterArray.join("+") : res = filterArray.join("")
     // ソートしたユーザー情報でindexをレンダリングする
-  location.assign(`/${order}`)
-  })
+    location.assign(`/${res}`)
+  }
+
+  // sort.addEventListener("change", () => {
+  //     let order = ""
+  //     // EX課題01 - 評価値のソート機能
+  //     for(option of sort.options) {
+  //         if (option.selected && option.value !== "") {
+  //             order = option.value
+  //         }
+  //     }
+  //   // ソートしたユーザー情報でindexをレンダリングする
+  // location.assign(`/${order}`)
+  // })
 
 </script>
 </html>
